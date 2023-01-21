@@ -26,9 +26,13 @@ const getContactById = async (contactId) => {
 const removeContact = async (contactId) => {
   try {
     const data = JSON.parse(await fs.readFile(contactsPath, 'utf8'));
-    const filteredList = await data.filter((item) => item.id !== contactId);
-    await fs.writeFile(contactsPath, JSON.stringify(filteredList));
-    return JSON.parse(await fs.readFile(contactsPath, 'utf8'));
+    if (await data.some((item) => item.id !== contactId)) {
+      const filteredList = await data.filter((item) => item.id !== contactId);
+      return await fs.writeFile(contactsPath, JSON.stringify(filteredList));
+    }
+
+    // return JSON.parse(await fs.readFile(contactsPath, 'utf8'));
+    return { message: 'Not found' };
   } catch (error) {
     console.log(error.message);
   }
