@@ -27,7 +27,7 @@ router
           message: 'Not found',
         });
       }
-      res.json({
+      res.status(200).json({
         status: 'success',
         code: 200,
         data: { contact },
@@ -57,9 +57,19 @@ router
   .delete('/:contactId', async (req, res, next) => {
     try {
       const { contactId } = req.params;
-      const response = await removeContact(contactId);
-      // res.status(200).json({ message: 'contact deleted' });
-      res.json({ response });
+      const contact = await getContactById(contactId);
+      if (!contact) {
+        return res.status(404).json({
+          code: 404,
+          message: 'Not found',
+        });
+      }
+      await removeContact(contactId);
+      return res.status(200).json({
+        status: 'success',
+        code: 200,
+        message: 'contact deleted',
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -68,11 +78,24 @@ router
     try {
       const { contactId } = req.params;
       const { name, email, phone } = req.body;
-      const contact = await updateContact(contactId, { name, email, phone });
-      res.json({
+
+      if (!name || !email || !phone) {
+        return res.status(400).json({ message: 'missing fields' });
+      }
+
+      const contact = await getContactById(contactId);
+
+      if (!contact) {
+        return res.status(404).json({
+          code: 404,
+          message: 'Not found',
+        });
+      }
+      const newContact = await updateContact(contactId, { name, email, phone });
+      return res.status(200).json({
         status: 'success',
         code: 200,
-        data: { contact },
+        data: { newContact },
       });
     } catch (error) {
       console.log(error.message);
