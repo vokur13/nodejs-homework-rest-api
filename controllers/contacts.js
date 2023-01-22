@@ -39,6 +39,14 @@ const postContact = async (req, res, next) => {
   try {
     const { name, email, phone } = req.body;
 
+    if (!name || !email || !phone) {
+      return res.status(400).json({
+        status: 'success',
+        code: 400,
+        message: 'missing required name field',
+      });
+    }
+
     const contact = await addContact({ name, email, phone });
     res.status(201).json({
       status: 'success',
@@ -75,6 +83,14 @@ const putContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
     const { name, email, phone } = req.body;
+
+    if (!name || !email || !phone) {
+      return res.status(400).json({
+        status: 'success',
+        code: 400,
+        message: 'missing fields',
+      });
+    }
 
     const contact = await getContactById(contactId);
 
