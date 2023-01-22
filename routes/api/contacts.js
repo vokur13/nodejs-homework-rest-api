@@ -10,15 +10,6 @@ const {
   updateContact,
 } = require('../../models/contacts.js');
 
-const schema = Joi.object({
-  name: Joi.string().min(3).max(30).required(),
-  email: Joi.string().email({
-    minDomainSegments: 2,
-    tlds: { allow: ['com', 'net'] },
-  }),
-  phone: myCustomJoi.string().phoneNumber().required(),
-});
-
 router
   .get('/', async (req, res, next) => {
     try {
@@ -48,6 +39,15 @@ router
     }
   })
   .post('/', async (req, res, next) => {
+    const schema = Joi.object({
+      name: Joi.string().min(3).max(30).required(),
+      email: Joi.string().email({
+        minDomainSegments: 2,
+        tlds: { allow: ['com', 'net'] },
+      }),
+      phone: myCustomJoi.string().phoneNumber().required(),
+    });
+
     const validateData = schema.validate(req.body);
 
     if (validateData.error) {
@@ -91,6 +91,15 @@ router
     }
   })
   .put('/:contactId', async (req, res, next) => {
+    const schema = Joi.object({
+      name: Joi.string().min(3).max(30).required(),
+      email: Joi.string().email({
+        minDomainSegments: 2,
+        tlds: { allow: ['com', 'net'] },
+      }),
+      phone: myCustomJoi.string().phoneNumber().required(),
+    });
+
     const validateData = schema.validate(req.body);
 
     if (validateData.error) {
