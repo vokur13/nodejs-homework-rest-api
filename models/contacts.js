@@ -1,24 +1,8 @@
 // const fs = require('fs/promises')
 const fs = require('fs').promises;
 const path = require('path');
-// const Joi = require('joi');
-// import { nanoid } from 'nanoid';
-// const { nanoid } = require('nanoid');
 
-// const schema = Joi.object({
-//   name: Joi.string().alphanum().min(3).max(30).required(),
-
-//   email: Joi.string()
-//     .email({
-//       minDomainSegments: 2,
-//       tlds: { allow: ['com', 'net'] },
-//     })
-//     .required(),
-
-//   phone: Joi.string().alphanum().min(3).max(30).required(),
-// });
-
-const contactsPath = path.resolve('models/contactsDraft.json');
+const contactsPath = path.resolve('models/contacts.json');
 
 const listContacts = async () => {
   try {
