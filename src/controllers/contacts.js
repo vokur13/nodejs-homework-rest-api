@@ -1,5 +1,6 @@
+const { collection } = require('../db/Datamodel');
 const {
-  listContacts,
+  // listContacts,
   getContactById,
   addContact,
   removeContact,
@@ -7,8 +8,9 @@ const {
 } = require('../models/contacts');
 
 const getContacts = async (req, res, next) => {
-  const contacts = await listContacts();
-  res.json({ status: 'success', code: 200, data: { contacts } });
+  // const contacts = await listContacts();
+  const response = await collection.find({});
+  res.json({ status: 'success', code: 200, data: { response } });
 };
 
 const getContactByID = async (req, res, next) => {
