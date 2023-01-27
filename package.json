@@ -9,10 +9,14 @@
     "lint:fix": "eslint --fix **/*.js"
   },
   "dependencies": {
+    "cookie-parser": "~1.4.6",
     "cors": "2.8.5",
     "cross-env": "7.0.3",
+    "debug": "~4.3.4",
     "dotenv": "^16.0.3",
+    "ejs": "~3.1.8",
     "express": "4.18.2",
+    "http-errors": "~2.0.0",
     "joi": "^17.7.0",
     "joi-phone-number": "^5.1.1",
     "mongodb": "^4.13.0",
@@ -24,10 +28,12 @@
   "devDependencies": {
     "eslint": "8.32.0",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "17.0.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "6.1.1",
-    "nodemon": "2.0.20"
+    "nodemon": "2.0.20",
+    "npx": "^10.2.2"
   }
 }
