@@ -1,24 +1,16 @@
 // const fs = require('fs/promises')
+const { Contact } = require('../db/dataModel');
 const fs = require('fs').promises;
 const path = require('path');
 
 const contactsPath = path.resolve('src/models/contacts.json');
 
 const listContacts = async () => {
-  try {
-    return JSON.parse(await fs.readFile(contactsPath, 'utf8'));
-  } catch (error) {
-    console.log(error.message);
-  }
+  return await Contact.find({});
 };
 
 const getContactById = async (contactId) => {
-  try {
-    const data = JSON.parse(await fs.readFile(contactsPath, 'utf8'));
-    return await data.find((item) => item.id === contactId);
-  } catch (error) {
-    console.log(error.message);
-  }
+  return await Contact.findById(contactId);
 };
 
 const removeContact = async (contactId) => {
@@ -32,34 +24,14 @@ const removeContact = async (contactId) => {
 };
 
 const addContact = async ({ name, email, phone }) => {
-  try {
-    const data = JSON.parse(await fs.readFile(contactsPath, 'utf8'));
-    const newContact = {
-      id: new Date().getTime().toString(),
-      name,
-      email,
-      phone,
-    };
-    const newList = [...data, newContact];
-    await fs.writeFile(contactsPath, JSON.stringify(newList));
-    return newContact;
-  } catch (error) {
-    console.log(error.message);
-  }
+  return await Contact.create({ name, email, phone });
 };
 
 const updateContact = async (contactId, { name, email, phone }) => {
-  try {
-    const data = JSON.parse(await fs.readFile(contactsPath, 'utf8'));
-    const contact = await data.find((item) => item.id === contactId);
-    contact.name = name;
-    contact.email = email;
-    contact.phone = phone;
-    await fs.writeFile(contactsPath, JSON.stringify(data));
-    return contact;
-  } catch (error) {
-    console.log(error.message);
-  }
+  await Contact.findByIdAndUpdate(contactId, {
+    $set: { name, email, phone },
+  });
+  return await Contact.findById(contactId);
 };
 
 module.exports = {

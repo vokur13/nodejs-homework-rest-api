@@ -7,6 +7,7 @@ const dataSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
   },
   phone: {
     type: String,
@@ -17,8 +18,8 @@ const dataSchema = new mongoose.Schema({
   },
 });
 
-const collection = mongoose.model('contact', dataSchema);
+const Contact = mongoose.model('contact', dataSchema);
 
 module.exports = {
-  collection,
+  Contact,
 };
