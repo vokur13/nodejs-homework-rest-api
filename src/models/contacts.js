@@ -66,7 +66,7 @@ const updateContact = async (req, res) => {
     });
   }
 
-  await Contact.findById(contactId);
+  return await Contact.findById(contactId);
 };
 
 const updateStatusContact = async ({ req, res }) => {
