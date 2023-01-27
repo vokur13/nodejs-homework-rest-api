@@ -24,4 +24,19 @@ module.exports = {
     }
     next();
   },
+  updateStatusContactValidation: (req, res, next) => {
+    const schema = Joi.object({
+      favorite: Joi.boolean(),
+    });
+
+    const validateData = schema.validate(req.body);
+
+    if (validateData.error) {
+      return res.status(400).json({
+        code: 400,
+        message: validateData.error.details,
+      });
+    }
+    next();
+  },
 };
