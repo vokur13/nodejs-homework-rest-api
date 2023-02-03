@@ -1,11 +1,11 @@
 const express = require('express');
 const router = new express.Router();
-const { asyncWrapper } = require('../helpers/apiHelper');
+const { asyncWrapper } = require('../../helpers/apiHelper');
 const {
   signupController,
   loginController,
   logoutController,
-} = require('../controllers/auth');
+} = require('../../controllers/auth');
 
 router
   .post('/users/signup', asyncWrapper(signupController))
