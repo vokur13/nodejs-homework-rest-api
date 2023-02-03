@@ -1,7 +1,7 @@
 const { Contact } = require('../db/dataModel');
 
-const listContacts = async () => {
-  return await Contact.find({});
+const listContacts = async (owner) => {
+  return await Contact.find({ owner });
 };
 
 const getContactById = async ({ req, res }) => {
@@ -31,7 +31,7 @@ const removeContact = async ({ req, res }) => {
   return response;
 };
 
-const addContact = async ({ req, res }) => {
+const addContact = async ({ req, res }, owner) => {
   const { name, email, phone } = req.body;
 
   if (!name || !email || !phone) {
@@ -41,7 +41,7 @@ const addContact = async ({ req, res }) => {
     });
   }
 
-  return await Contact.create({ name, email, phone });
+  return await Contact.create({ name, email, phone, owner });
 };
 
 const updateContact = async (req, res) => {

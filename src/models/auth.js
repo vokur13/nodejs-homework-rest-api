@@ -53,7 +53,7 @@ const login = async (req, res) => {
     id: user.id,
   };
 
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' });
 };
 
 const logout = async ({ req, res }) => {};

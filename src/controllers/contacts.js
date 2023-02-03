@@ -7,8 +7,9 @@ const {
   updateStatusContact,
 } = require('../models/contacts');
 
-const getContacts = async (req, res, next) => {
-  const response = await listContacts();
+const getContacts = async (req, res) => {
+  const { id } = req.user;
+  const response = await listContacts(id);
 
   res.json({
     status: 'success',
@@ -28,7 +29,8 @@ const getContactByID = async (req, res, next) => {
 };
 
 const postContact = async (req, res, next) => {
-  const response = await addContact({ req, res });
+  const { id } = req.user;
+  const response = await addContact({ req, res }, id);
 
   res.status(201).json({
     status: 'success',
