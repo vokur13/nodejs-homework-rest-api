@@ -18,8 +18,9 @@ const getContacts = async (req, res) => {
   });
 };
 
-const getContactByID = async (req, res, next) => {
-  const response = await getContactById({ req, res });
+const getContactByID = async (req, res) => {
+  const { id } = req.user;
+  const response = await getContactById({ req, res }, id);
 
   res.status(200).json({
     status: 'success',
@@ -28,7 +29,7 @@ const getContactByID = async (req, res, next) => {
   });
 };
 
-const postContact = async (req, res, next) => {
+const postContact = async (req, res) => {
   const { id } = req.user;
   const response = await addContact({ req, res }, id);
 
@@ -39,8 +40,9 @@ const postContact = async (req, res, next) => {
   });
 };
 
-const deleteContact = async (req, res, next) => {
-  await removeContact({ req, res });
+const deleteContact = async (req, res) => {
+  const { id } = req.user;
+  await removeContact({ req, res }, id);
 
   res.status(200).json({
     status: 'success',
@@ -49,8 +51,9 @@ const deleteContact = async (req, res, next) => {
   });
 };
 
-const putContact = async (req, res, next) => {
-  const response = await updateContact(req, res);
+const putContact = async (req, res) => {
+  const { id } = req.user;
+  const response = await updateContact({ req, res }, id);
 
   res.status(200).json({
     status: 'success',
@@ -59,8 +62,9 @@ const putContact = async (req, res, next) => {
   });
 };
 
-const patchContact = async (req, res, next) => {
-  const response = await updateStatusContact({ req, res });
+const patchContact = async (req, res) => {
+  const { id } = req.user;
+  const response = await updateStatusContact({ req, res }, id);
 
   res.status(200).json({
     status: 'success',

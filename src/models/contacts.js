@@ -4,10 +4,10 @@ const listContacts = async (owner) => {
   return await Contact.find({ owner });
 };
 
-const getContactById = async ({ req, res }) => {
+const getContactById = async ({ req, res }, owner) => {
   const { contactId } = req.params;
 
-  const contact = await Contact.findById(contactId);
+  const contact = await Contact.findOne({ _id: contactId, owner });
 
   if (!contact) {
     return res.status(404).json({
@@ -18,9 +18,9 @@ const getContactById = async ({ req, res }) => {
   return contact;
 };
 
-const removeContact = async ({ req, res }) => {
+const removeContact = async ({ req, res }, owner) => {
   const { contactId } = req.params;
-  const response = await Contact.findByIdAndRemove(contactId);
+  const response = await Contact.findOneAndRemove({ _id: contactId, owner });
 
   if (!response) {
     return res.status(404).json({
@@ -44,7 +44,7 @@ const addContact = async ({ req, res }, owner) => {
   return await Contact.create({ name, email, phone, owner });
 };
 
-const updateContact = async (req, res) => {
+const updateContact = async ({ req, res }, owner) => {
   const { contactId } = req.params;
   const { name, email, phone } = req.body;
 
@@ -55,9 +55,12 @@ const updateContact = async (req, res) => {
     });
   }
 
-  const response = await Contact.findByIdAndUpdate(contactId, {
-    $set: { name, email, phone },
-  });
+  const response = await Contact.findOneAndUpdate(
+    { _id: contactId, owner },
+    {
+      $set: { name, email, phone },
+    }
+  );
 
   if (!response) {
     return res.status(404).json({
@@ -66,10 +69,10 @@ const updateContact = async (req, res) => {
     });
   }
 
-  return await Contact.findById(contactId);
+  return await Contact.findOne({ _id: contactId, owner });
 };
 
-const updateStatusContact = async ({ req, res }) => {
+const updateStatusContact = async ({ req, res }, owner) => {
   const { contactId } = req.params;
 
   if (!req.body) {
@@ -81,9 +84,12 @@ const updateStatusContact = async ({ req, res }) => {
 
   const { favorite } = req.body;
 
-  const response = await Contact.findByIdAndUpdate(contactId, {
-    $set: { favorite },
-  });
+  const response = await Contact.findOneAndUpdate(
+    { _id: contactId, owner },
+    {
+      $set: { favorite },
+    }
+  );
 
   if (!response) {
     return res.status(404).json({
@@ -92,7 +98,7 @@ const updateStatusContact = async ({ req, res }) => {
     });
   }
 
-  return await Contact.findById(contactId);
+  return await Contact.findOne({ _id: contactId, owner });
 };
 
 module.exports = {
