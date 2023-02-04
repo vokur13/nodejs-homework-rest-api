@@ -12,7 +12,7 @@ const {
   deleteContact,
   putContact,
   patchContact,
-} = require('../../controllers/contacts');
+} = require('../../controllers/contactsController');
 const { authMiddleware } = require('../../middlewares/authMiddleware');
 
 router.use(authMiddleware);

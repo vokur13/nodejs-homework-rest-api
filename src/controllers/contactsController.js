@@ -5,7 +5,7 @@ const {
   removeContact,
   updateContact,
   updateStatusContact,
-} = require('../models/contacts');
+} = require('../models/contactsModel');
 
 const getContacts = async (req, res) => {
   const { id } = req.user;

@@ -5,7 +5,7 @@ const {
   signupController,
   loginController,
   logoutController,
-} = require('../../controllers/auth');
+} = require('../../controllers/authController');
 
 router
   .post('/users/signup', asyncWrapper(signupController))

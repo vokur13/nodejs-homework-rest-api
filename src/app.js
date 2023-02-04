@@ -3,8 +3,8 @@ const logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 
-const contactsRouter = require('./routes/api/contacts');
-const authRouter = require('./routes/api/auth');
+const contactsRouter = require('./routes/api/contactsAPI');
+const authRouter = require('./routes/api/authAPI');
 
 const app = express();
 

@@ -1,4 +1,4 @@
-const { signup, login, logout } = require('../models/auth');
+const { signup, login, logout } = require('../models/authModel');
 
 const signupController = async (req, res, next) => {
   await signup(req, res, next);
