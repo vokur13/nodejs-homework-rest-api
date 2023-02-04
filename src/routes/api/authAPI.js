@@ -7,10 +7,12 @@ const {
   logoutController,
 } = require('../../controllers/authController');
 
+const { authMiddleware } = require('../../middlewares/authMiddleware');
+
 router
   .post('/users/signup', asyncWrapper(signupController))
   .post('/users/login', asyncWrapper(loginController))
-  .get('/users/logout', asyncWrapper(logoutController));
+  .get('/users/logout', authMiddleware, asyncWrapper(logoutController));
 //   .get('/users/current', asyncWrapper(deleteContact))
 //   .patch('/users', addItemValidation, asyncWrapper(putContact));
 

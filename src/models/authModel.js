@@ -56,7 +56,7 @@ const login = async (req, res) => {
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' });
 };
 
-const logout = async ({ req, res }) => {};
+const logout = async () => {};
 
 module.exports = {
   signup,
