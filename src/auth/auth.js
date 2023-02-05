@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const UserModel = require('../db/userModel');
+const UserModel = require('../model/userModel');
 
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
@@ -49,6 +49,41 @@ passport.use(
         }
 
         return done(null, user, { message: 'Logged in Successfully' });
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  'logout',
+  new localStrategy(
+    {
+      userIdField: '_id',
+      // usernameField: 'email',
+      // passwordField: 'password',
+    },
+    async (
+      _id,
+      // email,
+      //  password,
+      done
+    ) => {
+      try {
+        const user = await UserModel.findOne({ _id });
+
+        if (!user) {
+          return done(null, false, { message: 'User not found' });
+        }
+
+        const validate = await user.isValidPassword(_id);
+
+        if (!validate) {
+          return done(null, false, { message: 'Wrong UserID' });
+        }
+
+        return done(null, user, { message: 'Logged out Successfully' });
       } catch (error) {
         return done(error);
       }

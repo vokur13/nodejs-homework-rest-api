@@ -2,8 +2,6 @@ const { User } = require('../db/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const myPlaintextPassword = 's0//P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
 const signup = async (req, res, next) => {
   const { email, password } = req.body;

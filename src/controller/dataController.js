@@ -1,14 +1,14 @@
-const { Contact } = require('../db/dataModel');
+const DataModel = require('../model/dataModel');
 
 const listContacts = async (owner) => {
   console.log('owner', owner);
-  return await Contact.find({ owner });
+  return await DataModel.find({ owner });
 };
 
 const getContactById = async ({ req, res }, owner) => {
   const { contactId } = req.params;
 
-  const contact = await Contact.findOne({ _id: contactId, owner });
+  const contact = await DataModel.findOne({ _id: contactId, owner });
 
   if (!contact) {
     return res.status(404).json({
@@ -21,7 +21,7 @@ const getContactById = async ({ req, res }, owner) => {
 
 const removeContact = async ({ req, res }, owner) => {
   const { contactId } = req.params;
-  const response = await Contact.findOneAndRemove({ _id: contactId, owner });
+  const response = await DataModel.findOneAndRemove({ _id: contactId, owner });
 
   if (!response) {
     return res.status(404).json({
@@ -42,7 +42,7 @@ const addContact = async ({ req, res }, owner) => {
     });
   }
 
-  return await Contact.create({ name, email, phone, owner });
+  return await DataModel.create({ name, email, phone, owner });
 };
 
 const updateContact = async ({ req, res }, owner) => {
@@ -56,7 +56,7 @@ const updateContact = async ({ req, res }, owner) => {
     });
   }
 
-  const response = await Contact.findOneAndUpdate(
+  const response = await DataModel.findOneAndUpdate(
     { _id: contactId, owner },
     {
       $set: { name, email, phone },
@@ -70,7 +70,7 @@ const updateContact = async ({ req, res }, owner) => {
     });
   }
 
-  return await Contact.findOne({ _id: contactId, owner });
+  return await DataModel.findOne({ _id: contactId, owner });
 };
 
 const updateStatusContact = async ({ req, res }, owner) => {
@@ -85,7 +85,7 @@ const updateStatusContact = async ({ req, res }, owner) => {
 
   const { favorite } = req.body;
 
-  const response = await Contact.findOneAndUpdate(
+  const response = await DataModel.findOneAndUpdate(
     { _id: contactId, owner },
     {
       $set: { favorite },
@@ -99,7 +99,7 @@ const updateStatusContact = async ({ req, res }, owner) => {
     });
   }
 
-  return await Contact.findOne({ _id: contactId, owner });
+  return await DataModel.findOne({ _id: contactId, owner });
 };
 
 module.exports = {

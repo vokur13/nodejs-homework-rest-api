@@ -27,8 +27,6 @@ const dataSchema = new Schema(
   { timestamps: true }
 );
 
-const Contact = mongoose.model('contact', dataSchema);
+const DataModel = mongoose.model('contact', dataSchema);
 
-module.exports = {
-  Contact,
-};
+module.exports = DataModel;

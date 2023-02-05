@@ -9,7 +9,7 @@ require('dotenv').config();
 
 require('./auth/auth');
 
-const { contactsRoute } = require('./routes/contacts-routes');
+const { contactsRoute } = require('./routes/data-routes');
 const { authRoute } = require('./routes/auth-routes');
 const secureRoute = require('./routes/secure-routes');
 

@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    // _id: Schema.Types.ObjectId,
     email: {
       type: String,
       required: [true, 'Email is required'],
@@ -21,11 +20,6 @@ const UserSchema = new Schema(
       enum: ['starter', 'pro', 'business'],
       default: 'starter',
     },
-    // contacts: [{ type: Schema.Types.ObjectId, ref: 'contact' }],
-    // token: {
-    //   type: String,
-    //   default: null,
-    // },
   },
   { timestamps: true }
 );
@@ -45,7 +39,6 @@ UserSchema.methods.isValidPassword = async function (password) {
   return compare;
 };
 
-// const User = mongoose.model('user', userSchema);
 const UserModel = mongoose.model('user', UserSchema);
 
 module.exports = UserModel;
