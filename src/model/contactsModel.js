@@ -1,6 +1,7 @@
 const { Contact } = require('../db/dataModel');
 
 const listContacts = async (owner) => {
+  console.log('owner', owner);
   return await Contact.find({ owner });
 };
 

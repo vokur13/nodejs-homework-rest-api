@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const dataSchema = new mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const dataSchema = new Schema(
   {
     name: {
       type: String,
@@ -18,13 +20,9 @@ const dataSchema = new mongoose.Schema(
       default: false,
     },
     owner: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'user',
     },
-    // owner: {
-    //   type: SchemaTypes.ObjectId,
-    //   ref: 'user',
-    // },
   },
   { timestamps: true }
 );

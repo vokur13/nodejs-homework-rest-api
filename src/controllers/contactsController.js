@@ -5,10 +5,11 @@ const {
   removeContact,
   updateContact,
   updateStatusContact,
-} = require('../models/contactsModel');
+} = require('../model/contactsModel');
 
 const getContacts = async (req, res) => {
-  const { id } = req.user;
+  const { id } = await req.user;
+  console.log('id', id);
   const response = await listContacts(id);
 
   res.json({
