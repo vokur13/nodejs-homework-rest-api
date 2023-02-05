@@ -1,8 +1,11 @@
 const DataModel = require('../model/dataModel');
 
-const listContacts = async (owner) => {
+const listContacts = async (owner, { skip, limit }) => {
   console.log('owner', owner);
-  return await DataModel.find({ owner });
+  return await DataModel.find({ owner })
+    .select({ _id: 0, owner: 0, __v: 0 })
+    .skip(skip)
+    .limit(limit);
 };
 
 const getContactById = async ({ req, res }, owner) => {
