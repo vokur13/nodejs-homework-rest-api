@@ -76,6 +76,13 @@ const updateContact = async ({ req, res }, owner) => {
   return await DataModel.findOne({ _id: contactId, owner });
 };
 
+// await Post.findOneAndUpdate(
+//   { _id: id, owner },
+//   {
+//     $set: { token: null },
+//   }
+// );
+
 const updateStatusContact = async ({ req, res }, owner) => {
   const { contactId } = req.params;
 

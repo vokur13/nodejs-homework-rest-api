@@ -57,45 +57,11 @@ passport.use(
 );
 
 passport.use(
-  'logout',
-  new localStrategy(
-    {
-      userIdField: '_id',
-      // usernameField: 'email',
-      // passwordField: 'password',
-    },
-    async (
-      _id,
-      // email,
-      //  password,
-      done
-    ) => {
-      try {
-        const user = await UserModel.findOne({ _id });
-
-        if (!user) {
-          return done(null, false, { message: 'User not found' });
-        }
-
-        const validate = await user.isValidPassword(_id);
-
-        if (!validate) {
-          return done(null, false, { message: 'Wrong UserID' });
-        }
-
-        return done(null, user, { message: 'Logged out Successfully' });
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
-
-passport.use(
   new JWTstrategy(
     {
       secretOrKey: TOP_SECRET,
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
+      // jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     },
     async (token, done) => {
       try {

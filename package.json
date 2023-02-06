@@ -18,6 +18,7 @@
     "dotenv": "^16.0.3",
     "ejs": "~3.1.8",
     "express": "^4.17.1",
+    "express-session": "^1.17.3",
     "http-errors": "~2.0.0",
     "joi": "^17.7.0",
     "joi-phone-number": "^5.1.1",

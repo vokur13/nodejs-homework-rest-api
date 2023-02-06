@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
@@ -22,6 +23,14 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 
 app.use('/api/contacts', contactsRoute);
 app.use('/api/auth', authRoute);

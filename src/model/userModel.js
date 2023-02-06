@@ -20,6 +20,7 @@ const UserSchema = new Schema(
       enum: ['starter', 'pro', 'business'],
       default: 'starter',
     },
+    contacts: [{ type: Schema.Types.ObjectId, ref: 'contact' }],
   },
   { timestamps: true }
 );
