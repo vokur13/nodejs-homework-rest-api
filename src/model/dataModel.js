@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const Schema = mongoose.Schema;
 
@@ -26,6 +27,8 @@ const dataSchema = new Schema(
   },
   { timestamps: true }
 );
+
+dataSchema.plugin(mongoosePaginate);
 
 const DataModel = mongoose.model('contact', dataSchema);
 

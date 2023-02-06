@@ -1,6 +1,19 @@
 const DataModel = require('../model/dataModel');
 
 const listContacts = async (owner, { skip, limit, favorite }) => {
+  const options = {
+    page: 1,
+    limit: 10,
+    collation: {
+      locale: 'en',
+    },
+  };
+
+  DataModel.paginate({}, options, function (err, result) {
+    result.limit = 10;
+    result.page = 1;
+  });
+
   return await DataModel.find({ owner })
     .select({ _id: 0, owner: 0, __v: 0 })
     .skip(skip)
