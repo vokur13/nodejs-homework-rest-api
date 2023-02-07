@@ -1,24 +1,53 @@
 const DataModel = require('../model/dataModel');
 
-const listContacts = async (owner, { skip, limit, favorite }) => {
+// const listContacts = async (owner, { page, limit, favorite }) => {
+
+//   const query = DataModel.find({ owner })
+//     .select({ _id: 0, owner: 0, __v: 0 })
+//     .sort('-name');
+
+//   const options = {
+//     page,
+//     limit,
+//     collation: {
+//       locale: 'en',
+//     },
+//   };
+
+//   return await DataModel.paginate(query, options, function (err, result) {
+//     if (!err) {
+//       return result;
+//     }
+//   });
+// };
+
+const listContacts = async ({ req, res }, owner) => {
+  const { page = 1, limit = 20 } = req.query;
+
+  const query = DataModel.find({ owner })
+    .select({ _id: 0, owner: 0, __v: 0 })
+    .sort('-name');
+
+  // const query = DataModel.find({
+  //   favorite: req.query.favorite ? req.query.favorite : null,
+  //   owner,
+  // })
+  //   .select({ _id: 0, owner: 0, __v: 0 })
+  //   .sort('-name');
+
   const options = {
-    page: 1,
-    limit: 10,
+    page,
+    limit,
     collation: {
       locale: 'en',
     },
   };
 
-  DataModel.paginate({}, options, function (err, result) {
-    result.limit = 10;
-    result.page = 1;
+  return await DataModel.paginate(query, options, function (err, result) {
+    if (!err) {
+      return result;
+    }
   });
-
-  return await DataModel.find({ owner })
-    .select({ _id: 0, owner: 0, __v: 0 })
-    .skip(skip)
-    .limit(limit)
-    .sort('-name');
 };
 
 const getContactById = async ({ req, res }, owner) => {

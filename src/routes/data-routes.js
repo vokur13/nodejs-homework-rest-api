@@ -20,17 +20,15 @@ router.use(auth);
 router
   .get('/', async (req, res) => {
     const { _id } = req.user;
-    let { skip = 0, limit = 20, favorite } = req.query;
-    limit = parseInt(limit) > 20 ? 20 : parseInt(limit);
-    skip = parseInt(skip);
-    const response = await listContacts(_id, { skip, limit, favorite });
+    // const { page = 1, limit = 20 } = req.query;
+
+    // const response = await listContacts(_id, { page, limit });
+    const response = await listContacts({ req, res }, _id);
 
     res.json({
       status: 'success',
       code: 200,
-      skip,
-      limit,
-      data: { response },
+      response,
     });
   })
   .get('/:contactId', async (req, res) => {
