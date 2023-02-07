@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 const express = require('express');
-// const session = require('express-session');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
@@ -8,7 +7,10 @@ const router = express.Router();
 const UserModel = require('../model/userModel');
 
 const auth = require('../middleware/authMiddleware');
-const { userValidator } = require('../middleware/validationMiddleware');
+const {
+  userValidator,
+  userSubscriptionValidator,
+} = require('../middleware/validationMiddleware');
 
 const TOP_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES = process.env.JWT_EXPIRES;
@@ -71,15 +73,39 @@ router
     } else {
       res.end();
     }
+  })
+  .patch('/users', auth, userSubscriptionValidator, async (req, res) => {
+    const { _id } = req.user;
+    const { subscription } = req.body;
+
+    if (!subscription) {
+      return res.status(400).json({
+        code: 400,
+        message: 'missing field "subscription"',
+      });
+    }
+
+    await UserModel.findOneAndUpdate(
+      { _id },
+      {
+        $set: { subscription },
+      }
+    );
+
+    const response = await UserModel.findOne({ _id });
+
+    if (!response) {
+      return res.status(404).json({
+        code: 404,
+        message: 'Not found',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      code: 200,
+      data: { response },
+    });
   });
 
 module.exports = { authRoute: router };
-
-// await Post.findOneAndUpdate(
-//   { _id: id, owner },
-//   {
-//     $set: { token: null },
-//   }
-// );
-
-// req.token = token;

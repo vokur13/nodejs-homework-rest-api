@@ -20,9 +20,6 @@ router.use(auth);
 router
   .get('/', async (req, res) => {
     const { _id } = req.user;
-    // const { page = 1, limit = 20 } = req.query;
-
-    // const response = await listContacts(_id, { page, limit });
     const response = await listContacts({ req, res }, _id);
 
     res.json({
