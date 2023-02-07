@@ -6,8 +6,6 @@ const logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 
-// const UserModel = require('./db/userModel');
-
 require('./auth/auth');
 
 const { contactsRoute } = require('./routes/data-routes');
