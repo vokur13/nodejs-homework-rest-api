@@ -1,6 +1,7 @@
 // const fs = require('fs/promises')
 const fs = require('fs').promises;
 const path = require('path');
+const { nanoid } = require('nanoid');
 
 const contactsPath = path.resolve('models/contacts.json');
 
@@ -25,7 +26,10 @@ const removeContact = async (contactId) => {
   try {
     const data = JSON.parse(await fs.readFile(contactsPath, 'utf8'));
     const filteredList = await data.filter((item) => item.id !== contactId);
-    return await fs.writeFile(contactsPath, JSON.stringify(filteredList));
+    return await fs.writeFile(
+      contactsPath,
+      JSON.stringify(filteredList, null, 2)
+    );
   } catch (error) {
     console.log(error.message);
   }
@@ -35,13 +39,14 @@ const addContact = async ({ name, email, phone }) => {
   try {
     const data = JSON.parse(await fs.readFile(contactsPath, 'utf8'));
     const newContact = {
-      id: new Date().getTime().toString(),
+      // id: new Date().getTime().toString(),
+      id: nanoid(),
       name,
       email,
       phone,
     };
     const newList = [...data, newContact];
-    await fs.writeFile(contactsPath, JSON.stringify(newList));
+    await fs.writeFile(contactsPath, JSON.stringify(newList, null, 2));
     return newContact;
   } catch (error) {
     console.log(error.message);
@@ -55,7 +60,7 @@ const updateContact = async (contactId, { name, email, phone }) => {
     contact.name = name;
     contact.email = email;
     contact.phone = phone;
-    await fs.writeFile(contactsPath, JSON.stringify(data));
+    await fs.writeFile(contactsPath, JSON.stringify(data, null, 2));
     return contact;
   } catch (error) {
     console.log(error.message);
