@@ -1,4 +1,5 @@
-const DataModel = require('../model/dataModel');
+// const DataModel = require('../model/dataModel');
+const { DataModel } = require('../model');
 
 const listContacts = async ({ req, res }, owner) => {
   const { page = 1, limit = 20 } = req.query;

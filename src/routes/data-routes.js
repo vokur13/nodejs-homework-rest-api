@@ -12,6 +12,7 @@ const {
   updateContact,
   updateStatusContact,
 } = require('../controller/dataController');
+const { getAllData, getDataByID } = require('../controller/data');
 
 const auth = require('../middleware/authMiddleware');
 
@@ -20,7 +21,8 @@ router.use(auth);
 router
   .get('/', async (req, res) => {
     const { _id } = req.user;
-    const response = await listContacts({ req, res }, _id);
+    // const response = await listContacts({ req, res }, _id);
+    const response = await getAllData({ req, res }, _id);
 
     res.json({
       status: 'success',
@@ -31,6 +33,7 @@ router
   .get('/:contactId', async (req, res) => {
     const { _id } = req.user;
     const response = await getContactById({ req, res }, _id);
+    // const response = await getDataByID({ req, res }, _id);
 
     res.status(200).json({
       status: 'success',
