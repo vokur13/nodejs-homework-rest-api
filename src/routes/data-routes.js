@@ -5,14 +5,13 @@ const {
   updateStatusContactValidation,
 } = require('../middleware/validationMiddleware');
 const {
-  listContacts,
-  addContact,
-  getContactById,
-  removeContact,
-  updateContact,
-  updateStatusContact,
-} = require('../controller/dataController');
-const { getAllData, getDataByID } = require('../controller/data');
+  getAllData,
+  getDataByID,
+  removeData,
+  addData,
+  updateData,
+  updateDataStatus,
+} = require('../controller/data');
 
 const auth = require('../middleware/authMiddleware');
 
@@ -21,7 +20,6 @@ router.use(auth);
 router
   .get('/', async (req, res) => {
     const { _id } = req.user;
-    // const response = await listContacts({ req, res }, _id);
     const response = await getAllData({ req, res }, _id);
 
     res.json({
@@ -32,8 +30,7 @@ router
   })
   .get('/:contactId', async (req, res) => {
     const { _id } = req.user;
-    const response = await getContactById({ req, res }, _id);
-    // const response = await getDataByID({ req, res }, _id);
+    const response = await getDataByID({ req, res }, _id);
 
     res.status(200).json({
       status: 'success',
@@ -43,7 +40,7 @@ router
   })
   .post('/', addItemValidation, async (req, res) => {
     const { _id } = req.user;
-    const response = await addContact({ req, res }, _id);
+    const response = await addData({ req, res }, _id);
 
     res.status(201).json({
       status: 'success',
@@ -53,7 +50,7 @@ router
   })
   .delete('/:contactId', async (req, res) => {
     const { _id } = req.user;
-    await removeContact({ req, res }, _id);
+    await removeData({ req, res }, _id);
 
     res.status(200).json({
       status: 'success',
@@ -63,7 +60,7 @@ router
   })
   .put('/:contactId', addItemValidation, async (req, res) => {
     const { _id } = req.user;
-    const response = await updateContact({ req, res }, _id);
+    const response = await updateData({ req, res }, _id);
 
     res.status(200).json({
       status: 'success',
@@ -76,7 +73,7 @@ router
     updateStatusContactValidation,
     async (req, res) => {
       const { _id } = req.user;
-      const response = await updateStatusContact({ req, res }, _id);
+      const response = await updateDataStatus({ req, res }, _id);
 
       res.status(200).json({
         status: 'success',
