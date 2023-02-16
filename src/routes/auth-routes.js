@@ -4,7 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-const UserModel = require('../model/userModel');
+const { UserModel } = require('../model');
 
 const auth = require('../middleware/authMiddleware');
 const {
@@ -23,7 +23,7 @@ router
     async (req, res, next) => {
       res.json({
         message: 'Signup successful',
-        user: req.user,
+        // user: req.user,
       });
     }
   )
