@@ -31,6 +31,8 @@ const { uploadController } = require('../controller');
 
 router.use(auth);
 
-router.post('/upload', upload.single('avatar'), uploadController);
+router
+  .post('/upload', upload.single('avatar'), uploadController)
+  .use('/', express.static('public'));
 
 module.exports = { filesRoute: router };
