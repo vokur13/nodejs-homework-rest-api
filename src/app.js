@@ -10,6 +10,7 @@ require('./auth/auth');
 
 const { contactsRoute } = require('./routes/data-routes');
 const { authRoute } = require('./routes/auth-routes');
+const { filesRoute } = require('./routes');
 const secureRoute = require('./routes/secure-routes');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(
 
 app.use('/api/contacts', contactsRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/files', filesRoute);
 
 // Plug in the JWT strategy as a middleware so only verified users can access this route.
 app.use('/user', passport.authenticate('jwt', { session: false }), secureRoute);
