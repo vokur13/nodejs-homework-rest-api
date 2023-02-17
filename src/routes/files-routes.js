@@ -3,6 +3,10 @@ const multer = require('multer');
 const path = require('path');
 const mime = require('mime-types');
 
+const { auth } = require('../middleware');
+
+const { uploadController } = require('../controller');
+
 const router = new express.Router();
 
 const uploadDir = path.resolve('public/avatars');
@@ -25,13 +29,8 @@ const upload = multer({
   storage,
 });
 
-const { auth } = require('../middleware');
-
-const { uploadController } = require('../controller');
-
-router.use(auth);
-
 router
+  .use(auth)
   .post('/upload', upload.single('avatar'), uploadController)
   .use('/', express.static('public'));
 
