@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const mime = require('mime-types');
 
 const router = new express.Router();
 
@@ -12,7 +13,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + '-' + uniqueSuffix);
+    const ext = mime.extension(file.mimetype);
+    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + ext);
   },
   limits: {
     fileSize: 1048576,
