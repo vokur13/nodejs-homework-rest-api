@@ -7,6 +7,8 @@ const { UserModel } = require('../model');
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
+const gravatar = require('gravatar');
+
 const TOP_SECRET = process.env.JWT_SECRET;
 
 passport.use(
@@ -18,7 +20,15 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await UserModel.create({ email, password });
+        const user = await UserModel.create({
+          email,
+          password,
+          avatarURL: gravatar.url(
+            email,
+            { s: '200', r: 'pg', d: 'wavatar' },
+            false
+          ),
+        });
 
         return done(null, user);
       } catch (error) {
