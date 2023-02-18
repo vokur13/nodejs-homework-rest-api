@@ -1,14 +1,15 @@
 const path = require('path');
-const uploadDir = path.resolve('uploads/avatars');
+const fs = require('fs').promises;
+const uploadDir = path.resolve('public/avatars');
 const Jimp = require('jimp');
 const mime = require('mime-types');
 const { v4: uuidv4 } = require('uuid');
-const { putUserAvatar } = require('../../services/usersService');
+const { userAvatarUpdate } = require('../../service');
 
 const avatarUpdateController = async function (req, res) {
   const { description } = req.body;
   const { path, mimetype } = req.file;
-  const { _id } = req.user.user;
+  const { _id } = req.user;
   const uniqueSuffix = uuidv4();
   const ext = mime.extension(mimetype);
   const staticFileName = `${_id}-${uniqueSuffix}.${ext}`;
@@ -20,9 +21,11 @@ const avatarUpdateController = async function (req, res) {
       .write(`${uploadDir}/${staticFileName}`); // save
   });
 
-  await putUserAvatar(_id, staticFileName);
+  await userAvatarUpdate(_id, staticFileName);
 
-  res.json({ description, message: 'Файл успешно загружен', status: 200 });
+  await fs.unlink(path);
+
+  res.json({ description, message: 'File uploaded successfully', status: 200 });
 };
 
 module.exports = {

@@ -25,7 +25,7 @@ const upload = multer({
   storage,
 });
 
-const auth = require('../middleware/authMiddleware');
+const { auth } = require('../middleware');
 
 const { avatarUpdateController } = require('../controller');
 
@@ -38,7 +38,7 @@ router
     upload.single('avatar'),
     asyncWrapper(avatarUpdateController)
   )
-  .use('/avatars', express.static('uploads/avatars'));
+  .use('/avatars', express.static('public/avatars'));
 
 module.exports = {
   usersRoutes: router,
