@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 const bcrypt = require('bcrypt');
@@ -23,6 +24,14 @@ const UserSchema = new Schema(
     },
     contacts: [{ type: Schema.Types.ObjectId, ref: 'contact' }],
     avatarURL: String,
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, 'Verify token is required'],
+    },
   },
   { timestamps: true }
 );

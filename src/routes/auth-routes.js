@@ -5,12 +5,16 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 const { UserModel } = require('../model');
+const { asyncWrapper } = require('../helpers');
 
 const auth = require('../middleware/authMiddleware');
+
 const {
   userValidator,
   userSubscriptionValidator,
 } = require('../middleware/validationMiddleware');
+
+const { authConfirmation, authConfirmationRepeat } = require('../controller');
 
 const TOP_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES = process.env.JWT_EXPIRES;
@@ -106,6 +110,8 @@ router
       code: 200,
       data: { response },
     });
-  });
+  })
+  .get('/users/verify/:verificationToken', asyncWrapper(authConfirmation))
+  .post('/users/verify', asyncWrapper(authConfirmationRepeat));
 
 module.exports = { authRoute: router };
